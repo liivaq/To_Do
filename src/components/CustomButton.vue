@@ -2,7 +2,12 @@
   <button
       @click="handleClick"
       :type="props.type"
-      class="bg-gray-300 my-2 px-4 py-1 text-md hover:bg-lime-500 hover:text-white rounded-lg"
+      class="px-2 py-1 bg-secondary-light dark:bg-darkSecondary"
+      :disabled="props.isDisabled"
+      :class="{
+        'hover:bg-lime-500 hover:text-white rounded-lg': !props.isDisabled,
+        'opacity-50 cursor-not-allowed': props.isDisabled
+      }"
   >
     <slot></slot>
   </button>
@@ -11,11 +16,15 @@
 <script setup lang="ts">
 
 const props =
-    defineProps<{
+   defineProps<{
       type?: {
         type: 'button' | 'submit' | 'reset'
         default: 'button'
-      }
+      },
+     isDisabled?: {
+        type: boolean;
+        default: false;
+     }
     }>()
 
 const emit = defineEmits<{
